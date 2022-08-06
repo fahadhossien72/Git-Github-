@@ -1,0 +1,17 @@
+{% extends 'accounts/main.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h3>Enter new password</h3>
+            <p>Please enter your new password twice so we can verify you typed it in correctly.</p>
+            <form class="form" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input class="btn btn-info" type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

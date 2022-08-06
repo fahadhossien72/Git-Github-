@@ -7,7 +7,7 @@
 			<h5>Customer:</h5>
 			<hr>
 			<a class="btn btn-outline-info  btn-sm btn-block" href="">Update Customer</a>
-			<a class="btn btn-outline-danger  btn-sm btn-block" href="">Place order</a>
+			<a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'create-order' customer.id %}">Place order</a>
 
 		</div>
 	</div>
@@ -35,7 +35,7 @@
 	<div class="col">
 		<div class="card card-body">
 			<form method="get">
-
+				{{ myFilter.form }}
 		    <button class="btn btn-primary" type="submit">Search</button>
 		  </form>
 
@@ -53,6 +53,7 @@
 					<th>Product</th>
 					<th>Date Orderd</th>
 					<th>Status</th>
+					<th>Note</th>
 					<th>Update</th>
 					<th>Remove</th>
 				</tr>
@@ -62,6 +63,7 @@
 					<td>{{order.product.name}}</td>
 					<td>{{order.date_created}}</td>
 					<td>{{order.status}}</td>
+					<td>{{order.note}}</td>
 					<td><a class="btn btn-sm btn-info" href="">update<a></td>
                     <td><a class="btn btn-sm btn-danger" href="">delete<a></td>
 
