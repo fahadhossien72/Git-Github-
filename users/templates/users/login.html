@@ -108,7 +108,13 @@
 					</form>
 
 				</div>
-		
+
+				{% for message in messages %}
+
+				<p id="messages">{{message}}</p>
+
+				{% endfor %}
+			
 				<div class="mt-4">
 					<div class="d-flex justify-content-center links">
 						Don't have an account? <a href="{% url 'reset_password' %}" class="ml-2">Forget Password</a>

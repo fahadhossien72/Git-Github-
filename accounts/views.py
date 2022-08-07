@@ -5,8 +5,10 @@ from accounts.forms import *
 from django.forms import inlineformset_factory
 from . filters import OrderFilter
 from django.contrib.auth.decorators import login_required
+from users.decorators import *
 # Create your views here.
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def home(request):
     orders = Order.objects.all()
     customer = Customer.objects.all()
