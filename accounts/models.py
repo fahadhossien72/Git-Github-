@@ -12,7 +12,14 @@ class Customer(models.Model):
 
     def __str__(self):
 	    return self.name
-
+    
+    @property
+    def imgURL(self):
+        try:
+            img = self.profile_pic.url
+        except:
+            img = ''
+        return img
 
 class Tag(models.Model):
     name = models.CharField(max_length=200, null=True)

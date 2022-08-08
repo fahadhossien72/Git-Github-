@@ -1,10 +1,13 @@
 from codecs import utf_16_be_decode
 from multiprocessing import context
+from unicodedata import name
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from . forms import CreateUserForm
 from . decorators import *
+from accounts.models import *
+from accounts.forms import *
 # Create your views here.
 @unauthenticated_user
 def userLogin(request):
@@ -43,7 +46,25 @@ def register(request):
     context = {'form': form}
     return render(request, 'users/registration.html', context)
 
+
 @allowed_users(allowed_roles=['customer'])
 def userAccount(request):
-    context = {}
+    orders = request.user.customer.order_set.all()
+    total_order = orders.count()
+    order_deliver = orders.filter(status='Delivered').count()
+    order_pending = orders.filter(status='Pending').count()
+    context = {'total_order': total_order, 'order_deliver':order_deliver, 'order_pending': order_pending, 'orders':orders}
     return render(request, 'users/user.html', context)
+
+
+@allowed_users(allowed_roles=['customer'])
+def userSetting(request):
+    customer = request.user.customer
+    form = CustomerForm(instance=customer)
+    if request.method == 'POST':
+        form = CustomerForm(request.POST, request.FILES, instance=customer)
+        if form.is_valid():
+            form.save()
+            return redirect('user-account')
+    context = {'form':form}
+    return render(request, 'users/setting.html', context)
